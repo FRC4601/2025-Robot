@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.RunArm;
 import frc.robot.commands.RunElevator;
+import frc.robot.commands.RunIntake;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.Joystick;
@@ -43,7 +44,7 @@ public class RobotContainer {
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
     private final CommandXboxController joystick = new CommandXboxController(0);
-    private final CommandXboxController xbox = new CommandXboxController(1);
+    public final static CommandXboxController xbox = new CommandXboxController(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
@@ -52,14 +53,16 @@ public class RobotContainer {
 
     public static Arm m_arm = new Arm();
     public static Elevator m_elevator = new Elevator();
+    public static Intake m_intake = new Intake();
 
 
     public RobotContainer() {
         configureBindings();
 
         //Set Default Commands
-        //m_arm.setDefaultCommand(new RunArm());
-        //m_elevator.setDefaultCommand(new RunElevator());
+        m_arm.setDefaultCommand(new RunArm());
+        m_elevator.setDefaultCommand(new RunElevator());
+        m_intake.setDefaultCommand(new RunIntake());
     }
 
     private void configureBindings() {
@@ -101,6 +104,7 @@ public class RobotContainer {
 
 
         //Co-Pilot Controls (XBOX)
+        
 
 
     }

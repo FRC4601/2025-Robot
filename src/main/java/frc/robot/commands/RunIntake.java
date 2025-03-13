@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class RunArm extends Command {
-  /** Creates a new RunArm. */
-  public RunArm() {
+public class RunIntake extends Command {
+  /** Creates a new RunIntake. */
+  public RunIntake() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -21,8 +21,13 @@ public class RunArm extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xboxLeftY = RobotContainer.xbox.getLeftY();
-    RobotContainer.m_arm.MoveArm(xboxLeftY * .325);
+    if (RobotContainer.xbox.rightBumper() != null){
+      RobotContainer.m_intake.MoveIntake(.4);
+    } else if (RobotContainer.xbox.leftBumper() != null){
+      RobotContainer.m_intake.MoveIntake(-.4);
+    } else{
+      RobotContainer.m_intake.MoveIntake(0);
+    }
   }
 
   // Called once the command ends or is interrupted.

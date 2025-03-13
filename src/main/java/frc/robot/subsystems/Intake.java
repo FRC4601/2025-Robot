@@ -5,25 +5,26 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Arm extends SubsystemBase {
-  private final TalonFX armkraken = new TalonFX(19);
+public class Intake extends SubsystemBase {
+  private final TalonFX intakekraken = new TalonFX(20);
 
-  public Arm() {
+  public Intake() {
     
     //arm motors
-    armkraken.setInverted(true);
+    intakekraken.setInverted(true);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
-public void MoveArm(double speed){
-    armkraken.set(speed);
+public void MoveIntake(double speed){
+    intakekraken.set(speed);
   }
-  public void StopArm(){
-    MoveArm(0);
+  public void StopIntake(){
+    MoveIntake(0);
   }
 }
