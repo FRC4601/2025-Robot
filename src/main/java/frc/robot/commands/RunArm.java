@@ -12,6 +12,7 @@ public class RunArm extends Command {
   /** Creates a new RunArm. */
   public RunArm() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.m_arm);
   }
 
   // Called when the command is initially scheduled.
@@ -22,7 +23,7 @@ public class RunArm extends Command {
   @Override
   public void execute() {
     double xboxLeftY = RobotContainer.xbox.getLeftY();
-    RobotContainer.m_arm.MoveArm(xboxLeftY * .325);
+    RobotContainer.m_arm.MoveArm(xboxLeftY * .5);
   }
 
   // Called once the command ends or is interrupted.

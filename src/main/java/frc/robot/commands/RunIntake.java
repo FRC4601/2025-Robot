@@ -12,6 +12,7 @@ public class RunIntake extends Command {
   /** Creates a new RunIntake. */
   public RunIntake() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.m_intake);
   }
 
   // Called when the command is initially scheduled.
@@ -21,13 +22,9 @@ public class RunIntake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (RobotContainer.xbox.rightBumper() != null){
-      RobotContainer.m_intake.MoveIntake(.4);
-    } else if (RobotContainer.xbox.leftBumper() != null){
-      RobotContainer.m_intake.MoveIntake(-.4);
-    } else{
-      RobotContainer.m_intake.MoveIntake(0);
-    }
+
+    //RobotContainer.m_intake.MoveIntake((RobotContainer.joystick.getRightTriggerAxis() - RobotContainer.joystick.getLeftTriggerAxis())*.4);
+    RobotContainer.m_intake.MoveIntake((RobotContainer.xbox.getRightTriggerAxis() - RobotContainer.xbox.getLeftTriggerAxis())*.4);
   }
 
   // Called once the command ends or is interrupted.

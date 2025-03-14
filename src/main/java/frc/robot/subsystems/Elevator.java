@@ -5,18 +5,27 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Elevator extends SubsystemBase {
   private final SparkMax leftWinch = new SparkMax(21, MotorType.kBrushless);
   private final SparkMax rightWinch = new SparkMax(22, MotorType.kBrushless);
+
+  private SparkMaxConfig leftWinchConfig = new SparkMaxConfig();
+  private SparkMaxConfig rightWinchConfig = new SparkMaxConfig();
+
   /** Creates a new Elevator. */
   public Elevator() {
     
     //winch motors
     //rightWinch.follow(leftWinch);
-    rightWinch.setInverted(true);
+    leftWinchConfig.idleMode(IdleMode.kBrake);
+    rightWinchConfig.idleMode(IdleMode.kBrake);
+
+    rightWinchConfig.follow(21, true);
   }
 
   @Override

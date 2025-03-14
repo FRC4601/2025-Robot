@@ -8,7 +8,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
-  private final TalonFX armkraken = new TalonFX(19);
+  private final TalonFX armkraken = new TalonFX(20);
 
   public Arm() {
     

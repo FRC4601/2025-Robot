@@ -9,7 +9,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
-  private final TalonFX intakekraken = new TalonFX(20);
+  private final TalonFX intakekraken = new TalonFX(19);
 
   public Intake() {
     
