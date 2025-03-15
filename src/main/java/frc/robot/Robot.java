@@ -1,3 +1,5 @@
+//CB-12 "Jack Sparrow"
+
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
@@ -5,6 +7,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -13,8 +16,16 @@ public class Robot extends TimedRobot {
 
   private final RobotContainer m_robotContainer;
 
+  //FMS Match Timer
+  public static Timer matchTimer;
+
   public Robot() {
     m_robotContainer = new RobotContainer();
+
+    //Initialize and stop match timer
+    matchTimer = new Timer();
+    matchTimer.reset();
+    matchTimer.stop();
   }
 
   @Override
@@ -34,6 +45,10 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+
+    //Reset and start the match timer when match starts (Autonomous is initialized)
+    matchTimer.reset();
+    matchTimer.start();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();

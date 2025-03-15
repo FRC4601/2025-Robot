@@ -23,7 +23,7 @@ public class RunArm extends Command {
   @Override
   public void execute() {
     double xboxLeftY = RobotContainer.xbox.getLeftY();
-    RobotContainer.m_arm.MoveArm(xboxLeftY * .5);
+    RobotContainer.m_arm.MoveArm(xboxLeftY * .2);
   }
 
   // Called once the command ends or is interrupted.

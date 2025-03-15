@@ -21,7 +21,6 @@ public class Elevator extends SubsystemBase {
   public Elevator() {
     
     //winch motors
-    //rightWinch.follow(leftWinch);
     leftWinchConfig.idleMode(IdleMode.kBrake);
     rightWinchConfig.idleMode(IdleMode.kBrake);
 

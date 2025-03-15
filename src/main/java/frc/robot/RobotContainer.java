@@ -20,13 +20,17 @@ import frc.robot.commands.RunElevator;
 import frc.robot.commands.RunIntake;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -54,15 +58,19 @@ public class RobotContainer {
     public static Arm m_arm = new Arm();
     public static Elevator m_elevator = new Elevator();
     public static Intake m_intake = new Intake();
+    public static Vision m_vision = new Vision();
 
 
     public RobotContainer() {
         configureBindings();
 
         //Set Default Commands
+        
         m_arm.setDefaultCommand(new RunArm());
         m_elevator.setDefaultCommand(new RunElevator());
         m_intake.setDefaultCommand(new RunIntake());
+
+        SmartDashboard.putData("Auto Chooser", m_autoChooser);
     }
 
     private void configureBindings() {
@@ -75,18 +83,18 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(joystick.getLeftY() * MaxSpeed *.75) // Drive forward with negative Y (forward)
-                    .withVelocityY(joystick.getLeftX() * MaxSpeed *.75) // Drive left with negative X (left)
-                    .withRotationalRate(joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                drive.withVelocityX(joystick.getLeftY() * MaxSpeed *.5) // Drive forward with negative Y (forward)                  Add "-" For Blue --- Remove "-" For Red
+                    .withVelocityY(joystick.getLeftX() * MaxSpeed *.5) // Drive left with negative X (left)                         Add "-" For Blue --- Remove "-" For Red
+                    .withRotationalRate(joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)     Add "-" For Blue --- Remove "-" For Red
             )
         );
 
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.b().whileTrue(drivetrain.applyRequest(() ->
             //point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
-            robotdrive.withTargetDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
-                        .withVelocityX(joystick.getLeftY() * MaxSpeed *.75)
-                        .withVelocityY(joystick.getLeftX() * MaxSpeed *.75)
+            robotdrive.withTargetDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))  //                          Remove "-" For Blue --- Add "-" For Red
+                        .withVelocityX(joystick.getLeftY() * MaxSpeed *.5)                              //                          Add "-" For Blue --- Remove "-" For Red
+                        .withVelocityY(joystick.getLeftX() * MaxSpeed *.5)                              //                          Add "-" For Blue --- Remove "-" For Red
             )
         );
 
@@ -102,6 +110,8 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
 
+        //joystick.x().onTrue(new InstantCommand(()->{drivetrain.seedFieldCentric();}, drivetrain));
+
 
         //Co-Pilot Controls (XBOX)
         
@@ -110,6 +120,18 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return Commands.print("No autonomous command configured");
+        // return Commands.print("No autonomous command configured");
+        //if(DriverStation.getAlliance().get() == Alliance.Blue){
+        //    return new RunCommand(()-> {drive.withVelocityX(.75);}, drivetrain).withTimeout(2);
+        //} else{
+        //    return new SequentialCommandGroup(
+        //        new InstantCommand(()->{drivetrain.seedFieldCentric();}, drivetrain),
+        //        new RunCommand(()-> {drive.withVelocityX(.75);}, drivetrain).withTimeout(2)
+        //    );        
+        //}
+        
+        return m_autoChooser.getSelected();
+
+    
     }
 }
