@@ -23,7 +23,7 @@ public class RunElevator extends Command {
   @Override
   public void execute() {
     double xboxRightY = RobotContainer.xbox.getRightY();
-    RobotContainer.m_elevator.ExtendElevator(-xboxRightY * .65);
+    RobotContainer.m_elevator.ExtendElevator(-xboxRightY * .30);
   }
 
   // Called once the command ends or is interrupted.
