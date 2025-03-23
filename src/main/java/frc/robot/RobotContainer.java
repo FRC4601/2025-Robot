@@ -8,6 +8,8 @@ import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest.RobotCentric;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -18,6 +20,8 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.RunArm;
 import frc.robot.commands.RunElevator;
 import frc.robot.commands.RunIntake;
+import frc.robot.commands.Autos.Mobility;
+import frc.robot.commands.Autos.PathUtil.AutonConfig;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -62,13 +66,18 @@ public class RobotContainer {
 
 
     public RobotContainer() {
+        drivetrain.configureAutoBuilder();
         configureBindings();
+
 
         //Set Default Commands
         
         m_arm.setDefaultCommand(new RunArm());
         m_elevator.setDefaultCommand(new RunElevator());
         m_intake.setDefaultCommand(new RunIntake());
+
+        m_autoChooser = AutoBuilder.buildAutoChooser("Get Off Line Auto");
+
 
         SmartDashboard.putData("Auto Chooser", m_autoChooser);
     }
@@ -83,18 +92,18 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(joystick.getLeftY() * MaxSpeed *.5) // Drive forward with negative Y (forward)                  Add "-" For Blue --- Remove "-" For Red
-                    .withVelocityY(joystick.getLeftX() * MaxSpeed *.5) // Drive left with negative X (left)                         Add "-" For Blue --- Remove "-" For Red
-                    .withRotationalRate(joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)     Add "-" For Blue --- Remove "-" For Red
+                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed *.5) // Drive forward with negative Y (forward)                  Add "-" For Blue Forward --- Remove "-" For Red Forward
+                    .withVelocityY(-joystick.getLeftX() * MaxSpeed *.5) // Drive left with negative X (left)                         Add "-" For Blue Forward --- Remove "-" For Red Forward
+                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)     Add "-" For Blue Forward --- Remove "-" For Red Forward
             )
         );
 
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.b().whileTrue(drivetrain.applyRequest(() ->
-            //point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
-            robotdrive.withTargetDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))  //                          Remove "-" For Blue --- Add "-" For Red
-                        .withVelocityX(joystick.getLeftY() * MaxSpeed *.5)                              //                          Add "-" For Blue --- Remove "-" For Red
-                        .withVelocityY(joystick.getLeftX() * MaxSpeed *.5)                              //                          Add "-" For Blue --- Remove "-" For Red
+            point.withModuleDirection(new Rotation2d(-joystick.getLeftY() * MaxSpeed *.5, -joystick.getLeftX()* MaxSpeed *.5))
+            //robotdrive.withTargetDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))  //                          Remove "-" For Blue Forward ---  Add "-" For Red Forward
+            //            .withVelocityX(joystick.getLeftY() * MaxSpeed *.5)                              //                          Add "-" For Blue Forward --- Remove "-" For Red Forward
+            //            .withVelocityY(joystick.getLeftX() * MaxSpeed *.5)                              //                          Add "-" For Blue Forward --- Remove "-" For Red Forward
             )
         );
 
@@ -112,24 +121,14 @@ public class RobotContainer {
 
 
         //Co-Pilot Controls (XBOX)
-        
-
 
     }
 
-    public Command getAutonomousCommand() {
-        // return Commands.print("No autonomous command configured");
-        //if(DriverStation.getAlliance().get() == Alliance.Blue){
-        //    return new RunCommand(()-> {drive.withVelocityX(.75);}, drivetrain).withTimeout(2);
-        //} else{
-        //    return new SequentialCommandGroup(
-        //        new InstantCommand(()->{drivetrain.seedFieldCentric();}, drivetrain),
-        //        new RunCommand(()-> {drive.withVelocityX(.75);}, drivetrain).withTimeout(2)
-        //    );        
-        //}
-        
-        return m_autoChooser.getSelected();
 
+
+    public Command getAutonomousCommand() {
+        //return Commands.print("No autonomous command configured");
+        return m_autoChooser.getSelected();
     
     }
 }

@@ -13,6 +13,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -26,7 +27,7 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-
+import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 
 /**
@@ -34,6 +35,15 @@ import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
  * Subsystem so it can easily be used in command-based projects.
  */
 public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
+    private final static CommandSwerveDrivetrain instance;
+
+    static {
+        instance = TunerConstants.createDrivetrain();
+    }
+
+    public static CommandSwerveDrivetrain getInstance() {
+        return instance;
+    }
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
@@ -157,7 +167,19 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         if (Utils.isSimulation()) {
             startSimThread();
         }
-        configureAutoBuilder();
+    }
+
+    public Command followPathCommand(String pathName) {
+        try {
+            return followPathCommand(PathPlannerPath.fromPathFile(pathName));
+        }
+        catch (Exception e) {
+            throw new IllegalArgumentException(pathName + " does not exist");
+        }
+    }
+
+    public Command followPathCommand(PathPlannerPath path) {
+        return AutoBuilder.followPath(path);
     }
 
     /**
@@ -190,10 +212,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         if (Utils.isSimulation()) {
             startSimThread();
         }
-        configureAutoBuilder();
+        DriverStation.reportWarning("Starting auto builder now", m_hasAppliedOperatorPerspective);
     }
 
-    private void configureAutoBuilder() {
+    public void configureAutoBuilder() {
         try {
             var config = RobotConfig.fromGUISettings();
             AutoBuilder.configure(
@@ -218,7 +240,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 this // Subsystem for requirements
             );
         } catch (Exception ex) {
+            ex.printStackTrace();
             DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", ex.getStackTrace());
+            System.exit(-1);
         }
     }
 

@@ -24,7 +24,7 @@ public class RunIntake extends Command {
   public void execute() {
 
     //RobotContainer.m_intake.MoveIntake((RobotContainer.joystick.getRightTriggerAxis() - RobotContainer.joystick.getLeftTriggerAxis())*.4);
-    RobotContainer.m_intake.MoveIntake((RobotContainer.xbox.getRightTriggerAxis() - RobotContainer.xbox.getLeftTriggerAxis())*1);
+    RobotContainer.m_intake.MoveIntake((RobotContainer.xbox.getRightTriggerAxis() - RobotContainer.xbox.getLeftTriggerAxis())*.75);
   }
 
   // Called once the command ends or is interrupted.
