@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Score 1 Far"
+            "pathName": "Score 1 Proc BS"
           }
         },
         {
@@ -19,7 +19,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot Coral 40"
+            "name": "Shoot Coral 35"
           }
         },
         {
@@ -31,7 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Score 1 Far Backup"
+            "pathName": "Score 1 Proc BS Backup"
           }
         }
       ]

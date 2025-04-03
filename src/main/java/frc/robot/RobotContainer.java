@@ -19,10 +19,13 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.RunArm;
+//import frc.robot.commands.RunLED;
 import frc.robot.commands.RunElevator;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.Autos.Mobility;
-import frc.robot.commands.Autos.ShootCoral;
+import frc.robot.commands.Autos.ShootCoral30;
+import frc.robot.commands.Autos.ShootCoral35;
+import frc.robot.commands.Autos.ShootCoral40;
 import frc.robot.commands.Autos.PathUtil.AutonConfig;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.*;
@@ -65,6 +68,7 @@ public class RobotContainer {
     public static Elevator m_elevator = new Elevator();
     public static Intake m_intake = new Intake();
     public static Vision m_vision = new Vision();
+    //public static LED m_led = new LED();
 
 
     public RobotContainer() {
@@ -77,6 +81,7 @@ public class RobotContainer {
         m_arm.setDefaultCommand(new RunArm());
         m_elevator.setDefaultCommand(new RunElevator());
         m_intake.setDefaultCommand(new RunIntake());
+        //m_led.setDefaultCommand(new RunBlinkin());
 
         RegisterNamedCommands();
 
@@ -137,7 +142,9 @@ public class RobotContainer {
     }
 
     private void RegisterNamedCommands(){
-        NamedCommands.registerCommand("Shoot Coral",new ShootCoral().withTimeout(3));
+        NamedCommands.registerCommand("Shoot Coral 40",new ShootCoral40().withTimeout(3));
+        NamedCommands.registerCommand("Shoot Coral 35",new ShootCoral35().withTimeout(3));
+        NamedCommands.registerCommand("Shoot Coral 30",new ShootCoral30().withTimeout(3));
         
     }
 }

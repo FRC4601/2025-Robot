@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ShootCoral extends Command {
-  /** Creates a new ShootCoral. */
-  public ShootCoral() {
+public class ShootCoral35 extends Command {
+  /** Creates a new ShootCoral 35% Speed. */
+  public ShootCoral35() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_intake);
   }
@@ -22,7 +22,7 @@ public class ShootCoral extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_intake.MoveIntake(.4);
+    RobotContainer.m_intake.MoveIntake(.35);
   }
 
   // Called once the command ends or is interrupted.

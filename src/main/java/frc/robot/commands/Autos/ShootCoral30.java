@@ -2,15 +2,15 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Autos;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class RunIntake extends Command {
-  /** Creates a new RunIntake. */
-  public RunIntake() {
+public class ShootCoral30 extends Command {
+  /** Creates a new ShootCoral 30% Speed. */
+  public ShootCoral30() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_intake);
   }
@@ -22,14 +22,14 @@ public class RunIntake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    //RobotContainer.m_intake.MoveIntake((RobotContainer.joystick.getRightTriggerAxis() - RobotContainer.joystick.getLeftTriggerAxis())*.4);
-    RobotContainer.m_intake.MoveIntake((RobotContainer.xbox.getRightTriggerAxis() - RobotContainer.xbox.getLeftTriggerAxis())*.75);
+    RobotContainer.m_intake.MoveIntake(.3);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.m_intake.MoveIntake(0);
+  }
 
   // Returns true when the command should end.
   @Override
@@ -37,4 +37,3 @@ public class RunIntake extends Command {
     return false;
   }
 }
-
