@@ -11,6 +11,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Elevator extends SubsystemBase {
@@ -19,7 +20,6 @@ public class Elevator extends SubsystemBase {
 
   private SparkMaxConfig leftWinchConfig = new SparkMaxConfig();
   private SparkMaxConfig rightWinchConfig = new SparkMaxConfig();
-
   /** Creates a new Elevator. */
   public Elevator() {
     

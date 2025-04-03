@@ -9,6 +9,7 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest.RobotCentric;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
@@ -21,6 +22,7 @@ import frc.robot.commands.RunArm;
 import frc.robot.commands.RunElevator;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.Autos.Mobility;
+import frc.robot.commands.Autos.ShootCoral;
 import frc.robot.commands.Autos.PathUtil.AutonConfig;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.*;
@@ -76,6 +78,8 @@ public class RobotContainer {
         m_elevator.setDefaultCommand(new RunElevator());
         m_intake.setDefaultCommand(new RunIntake());
 
+        RegisterNamedCommands();
+
         m_autoChooser = AutoBuilder.buildAutoChooser("Get Off Line Auto");
 
 
@@ -130,5 +134,10 @@ public class RobotContainer {
         //return Commands.print("No autonomous command configured");
         return m_autoChooser.getSelected();
     
+    }
+
+    private void RegisterNamedCommands(){
+        NamedCommands.registerCommand("Shoot Coral",new ShootCoral().withTimeout(3));
+        
     }
 }
