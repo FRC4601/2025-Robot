@@ -26,6 +26,7 @@ import frc.robot.commands.Autos.Mobility;
 import frc.robot.commands.Autos.ShootCoral30;
 import frc.robot.commands.Autos.ShootCoral35;
 import frc.robot.commands.Autos.ShootCoral40;
+import frc.robot.commands.Autos.ShootCoral50;
 import frc.robot.commands.Autos.PathUtil.AutonConfig;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.*;
@@ -40,6 +41,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.LEDSubsystem.LEDPattern;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -68,7 +70,7 @@ public class RobotContainer {
     public static Elevator m_elevator = new Elevator();
     public static Intake m_intake = new Intake();
     public static Vision m_vision = new Vision();
-    //public static LED m_led = new LED();
+    private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
 
 
     public RobotContainer() {
@@ -142,6 +144,7 @@ public class RobotContainer {
     }
 
     private void RegisterNamedCommands(){
+        NamedCommands.registerCommand("Shoot Coral 50",new ShootCoral50().withTimeout(3));
         NamedCommands.registerCommand("Shoot Coral 40",new ShootCoral40().withTimeout(3));
         NamedCommands.registerCommand("Shoot Coral 35",new ShootCoral35().withTimeout(3));
         NamedCommands.registerCommand("Shoot Coral 30",new ShootCoral30().withTimeout(3));

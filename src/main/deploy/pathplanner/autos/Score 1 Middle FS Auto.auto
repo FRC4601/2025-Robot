@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Score 1 Far"
+            "pathName": "Score 1 Middle FS"
           }
         },
         {
@@ -19,19 +19,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot Coral 50"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "name": "Shoot Coral 40"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Score 1 Far Backup"
+            "pathName": "Score 1 Middle FS Backup"
           }
         }
       ]
